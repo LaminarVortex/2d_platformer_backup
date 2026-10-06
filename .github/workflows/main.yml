@@ -1,0 +1,60 @@
+name: CI and Mirroring
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sanity_check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Check ProjectSettings
+        run: |
+          if [ -d "ProjectSettings" ]; then echo "ProjectSettings найден."; else echo "Ошибка!" && exit 1; fi
+
+      - name: Check Packages
+        run: |
+          if [ -d "Packages" ]; then echo "Packages найден."; else echo "Ошибка!" && exit 1; fi
+
+      - name: Locate 2D Platformer Scripts
+        run: |
+          echo "=== Поиск скриптов в папке Assets ==="
+          find Assets/ -name "Controller.cs" -print
+          find Assets/ -name "BuildManager.cs" -print
+
+  mirror_repo:
+    needs: sanity_check
+    # ВАЖНО: Замените на ваш логин и название основного репозитория
+    if: github.repository == 'LaminarVortex/ARPO_Lab1' 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Verify token is set
+        env:
+          BACKUP_TOKEN: ${{ secrets.BACKUP_TOKEN }}
+        run: |
+          if [ -z "$BACKUP_TOKEN" ]; then
+            echo "=== ОШИБКА: BACKUP_TOKEN is empty! Create a PAT with scopes [repo, workflow] ==="
+            exit 1
+          else
+            echo "=== BACKUP_TOKEN is set ==="
+          fi
+
+      - name: Push to Backup Repository
+        env:
+          BACKUP_TOKEN: ${{ secrets.BACKUP_TOKEN }}
+        run: |
+          echo "=== Начало процесса зеркалирования ==="
+          # Используем HEAD:main вместо просто main
+          git push --force https://x-access-token:${{ secrets.BACKUP_TOKEN }}@github.com/LaminarVortex/2d_platformer_backup.git HEAD:main
+          echo "=== Код успешно продублирован ==="
