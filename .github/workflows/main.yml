@@ -30,7 +30,7 @@ jobs:
   mirror_repo:
     needs: sanity_check
     # ВАЖНО: Замените на ваш логин и название основного репозитория
-    if: github.repository == "LaminarVortex/ARPO_Lab1" 
+    if: github.repository == 'LaminarVortex/ARPO_Lab1' 
     runs-on: ubuntu-latest
     steps:
       - name: Checkout full history
