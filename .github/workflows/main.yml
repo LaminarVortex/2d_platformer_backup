@@ -55,6 +55,6 @@ jobs:
           BACKUP_TOKEN: ${{ secrets.BACKUP_TOKEN }}
         run: |
           echo "=== Начало процесса зеркалирования ==="
-          # ВНИМАНИЕ: Если ваша основная ветка называется master, замените main на master
-          git push --force https://x-access-token:${{ secrets.BACKUP_TOKEN }}@github.com/LaminarVortex/2d_platformer_backup.git main
+          # Используем HEAD:main вместо просто main
+          git push --force https://x-access-token:${{ secrets.BACKUP_TOKEN }}@github.com/LaminarVortex/2d_platformer_backup.git HEAD:main
           echo "=== Код успешно продублирован ==="
