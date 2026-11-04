@@ -95,6 +95,6 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/ВАШ_НИКНЕЙМ/platformer-game:latest
-            ghcr.io/ВАШ_НИКНЕЙМ/platformer-game:$ {{ github.sha }}
+            ghcr.io/LaminarVortex/platformer-game:latest
+            ghcr.io/LaminarVortex/platformer-game:$ {{ github.sha }}
     
