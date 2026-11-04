@@ -58,7 +58,7 @@ jobs:
           git push --force https://x-access-token:${{ secrets.BACKUP_TOKEN }}@github.com/LaminarVortex/2d_platformer_backup.git HEAD:main
           echo "=== Код успешно продублирован ==="
 
-  # НОВЫЙ ЭТАП 3: Автоматическая сборка Docker-образа в облако
+    # НОВЫЙ ЭТАП 3: Автоматическая сборка Docker-образа в облако
   build_docker_image:
     needs: sanity_check
     runs-on: ubuntu-latest
@@ -69,25 +69,31 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      # ВАРИАНТ 1: Приводим имя владельца репозитория к нижнему регистру
+      # (Docker/OCI требует, чтобы весь путь образа был в lowercase)
+      - name: Set lowercase repository owner
+        run: echo "OWNER_LC=$(echo ${{ github.repository_owner }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
       - name: Create Compressed Placeholders for Docker
-    # Генерируем фейковые .gz файлы, чтобы шаг COPY в Dockerfile не упал без реального билда Unity
-  
+        # Генерируем фейковые .gz файлы, чтобы шаг COPY в Dockerfile не упал без реального билда Unity
         run: |
           mkdir -p Builds/WebGL/Build
           if [ -z "$(ls -A Builds/WebGL/Build)" ]; then
-            echo "<h3>Unity 6 Compressed Game Cloud
-            Layer</h3>" > Builds/WebGL/index.html
+            echo "<h3>Unity 6 Compressed Game Cloud Layer</h3>" > Builds/WebGL/index.html
             touch Builds/WebGL/Build/game.framework.js.gz
             touch Builds/WebGL/Build/game.wasm.gz
             touch Builds/WebGL/Build/game.data.gz
             echo "Создана временная структура сжатых файлов для сборщика Docker."
           fi
+
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }} # Системный автоматический токен GitHub
+
       - name: Build and Push Compressed Docker Image
         uses: docker/build-push-action@v5
         with:
@@ -95,6 +101,5 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ghcr.io/LaminarVortex/ARPO_Lab1:latest
-            ghcr.io/LaminarVortex/ARPO_Lab1:$ {{ github.sha }}
-    
+            ghcr.io/${{ env.OWNER_LC }}/arpo_lab1:latest
+            ghcr.io/${{ env.OWNER_LC }}/arpo_lab1:${{ github.sha }}
