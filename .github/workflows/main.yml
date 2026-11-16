@@ -52,19 +52,17 @@ jobs:
 # --coverageEnabled=false. Coverage отключен, т.к. инструментирование
 # кода роняет Unity 6 в контейнере (SIGSEGV, exit code 139).
       - name: Run Unity Tests
-        run: |
-          game-ci test --docker --dockerShmSize=1025m \
-          --engine=unity --
-          testPlatforms='playmode;editmode;COMBINE_RESULTS' \
-          --engineVersion=6000.3.11f1 --coverageEnabled=false
-          \
-          --artifactsPath=artifacts --
-          dockerIsolationMode=default \
-          --containerRegistryRepository=unityci/editor \
+        run: >
+          game-ci test --docker --dockerShmSize=1025m
+          --engine=unity
+          --testPlatforms='playmode;editmode;COMBINE_RESULTS'
+          --engine-version=6000.3.11f1
+          --coverageEnabled=false
+          --artifactsPath=artifacts
+          --dockerIsolationMode=default
+          --containerRegistryRepository=unityci/editor
           --containerRegistryImageVersion=3
         env:
-
-# Секреты лицензии Unity для активации редактора на раннере
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
