@@ -28,6 +28,5 @@ public class PlayerTests
         "Ошибка: на объекте игрока отсутствует скрипт PlayerController!");
         Assert.IsNotNull(player.GetComponent<Health>(),
         "Ошибка: на объекте игрока отсутствует скрипт Health!");
-        Assert.AreEqual(1, 2));
     }
 }
