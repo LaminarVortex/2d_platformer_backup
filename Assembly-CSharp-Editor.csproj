@@ -629,6 +629,10 @@
       <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.2f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.2f1\Editor\Data\PlaybackEngines\AndroidPlayer\UnityEditor.Android.Extensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.YamlDotNet">
       <HintPath>Library\PackageCache\com.unity.visualscripting@191c0d7e3b69\Editor\VisualScripting.Core\Dependencies\YamlDotNet\Unity.VisualScripting.YamlDotNet.dll</HintPath>
       <Private>False</Private>
@@ -667,6 +671,14 @@
     </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe">
       <HintPath>Library\PackageCache\com.unity.collections@aea9d3bd5e19\Unity.Collections.Tests\System.Runtime.CompilerServices.Unsafe\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Types">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.2f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Types.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Android.Gradle">
+      <HintPath>C:\Program Files\Unity\Hub\Editor\6000.3.2f1\Editor\Data\PlaybackEngines\AndroidPlayer\Unity.Android.Gradle.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="mscorlib">
@@ -1527,9 +1539,17 @@
       <Project>{5A2E0370-6E3E-03B2-C0CF-610D4B8378C0}</Project>
       <Name>Unity.Platformer.Tutorials</Name>
     </ProjectReference>
+    <ProjectReference Include="PlayModeTests.csproj">
+      <Project>{30DC2B4F-6D5A-1CD2-0116-9CCDF2B2DF32}</Project>
+      <Name>PlayModeTests</Name>
+    </ProjectReference>
     <ProjectReference Include="Unity.2DPlatformer.Tutorials.csproj">
       <Project>{1DFDE83E-3F7F-F889-7F75-0DF3E5641107}</Project>
       <Name>Unity.2DPlatformer.Tutorials</Name>
+    </ProjectReference>
+    <ProjectReference Include="GameAssembly.csproj">
+      <Project>{0871441F-5F17-74B4-6A0C-4493BD99769F}</Project>
+      <Name>GameAssembly</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

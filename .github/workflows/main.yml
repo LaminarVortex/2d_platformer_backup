@@ -75,7 +75,7 @@ jobs:
           path: artifacts/
 
   mirror_repo:
-    needs: sanity_check
+    needs: run_tests
     # ВАЖНО: Замените на ваш логин и название основного репозитория
     if: github.repository == 'LaminarVortex/ARPO_Lab1' 
     runs-on: ubuntu-latest
@@ -107,7 +107,7 @@ jobs:
 
     # НОВЫЙ ЭТАП 3: Автоматическая сборка Docker-образа в облако
   build_docker_image:
-    needs: sanity_check
+    needs: run_tests
     runs-on: ubuntu-latest
     # КРИТИЧЕСКИ ВАЖНЫЕ СТРОКИ: Разрешаем этой конкретной задаче публиковать пакеты
     permissions:

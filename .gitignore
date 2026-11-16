@@ -21,3 +21,9 @@
 .opendb
 .VC.db
 build_webgl.log
+.vs/
+*.csproj
+*.sln
+Library/
+Temp/
+Obj/
