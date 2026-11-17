@@ -23,7 +23,7 @@ public class PlayerStopJumpTests
 
         playerObj.SetActive(true);
 
-        // Имитируем состояние игрока после отрыва от земли / во время прыжка
+        // Имитация прыжка игрока
         player.velocity = new Vector2(0f, 10f);
 
         // При отпускании кнопки прыжка PlayerController планирует PlayerStopJump.
@@ -33,8 +33,6 @@ public class PlayerStopJumpTests
         Assert.IsNotNull(stopJumpEvent, "Ошибка: событие PlayerStopJump не было создано/запланировано.");
         Assert.AreSame(player, stopJumpEvent.player, "Ошибка: в PlayerStopJump не передан PlayerController игрока.");
 
-        // В изолированном PlayMode-тесте нет полноценного GameController,
-        // который обычно прокручивает очередь Simulation, поэтому выполняем событие явно.
         stopJumpEvent.Execute();
 
         // PlayerStopJump должен уменьшить положительную вертикальную скорость
